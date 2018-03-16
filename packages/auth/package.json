@@ -1,0 +1,27 @@
+{
+  "name": "@parti/reactfire-auth",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "node ../dev-scripts/build",
+    "watch": "node ../dev-scripts/watch",
+    "prepublish": "yarn run build",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@firebase/auth": "^0.3.4",
+    "jest": "^22.4.2",
+    "prettier": "^1.11.1",
+    "flow-bin": "^0.68.0"
+  },
+  "dependencies": {
+    "@parti/reactfire-provider": "^0.0.1"
+  },
+  "peerDependencies": {
+    "@firebase/auth": "^0.3.4"
+  }
+}

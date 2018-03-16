@@ -1,0 +1,36 @@
+{
+  "name": "@parti/reactfire-provider",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "node ../dev-scripts/build",
+    "watch": "node ../dev-scripts/watch",
+    "distribute": "node ../dev-scripts/distribute",
+    "prepublish": "yarn run build",
+    "test": "jest"
+  },
+  "keywords": [
+    "react",
+    "firebase",
+    "hoc"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@firebase/app": "^0.1.10",
+    "firebase": "^4.11.0",
+    "flow-bin": "^0.68.0",
+    "jest": "^22.4.2",
+    "prettier": "^1.11.1",
+    "react": "^16.2.0",
+    "typescript": "^2.7.2"
+  },
+  "peerDependencies": {
+    "@firebase/app": "^0.1.10",
+    "firebase": "^4.11.0",
+    "react": "^16.2.0"
+  },
+  "dependencies": {
+  }
+}

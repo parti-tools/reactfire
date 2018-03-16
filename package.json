@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "devDependencies": {
+    "flow-mono-cli": "^1.3.0"
+  },
+  "scripts": {
+    "link": "flow-mono create-symlinks ./build/.flowconfig",
+    "prepare": "yarn run link"
+  },
+  "workspaces": ["packages/*"]
+}
