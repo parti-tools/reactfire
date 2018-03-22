@@ -1,7 +1,7 @@
 // @flow
 export type UserState =
-  | { type: "loading" }
-  | { type: "unknown" }
+  | { type: "loading", user: void }
+  | { type: "unknown", user: void }
   | { type: "loaded", user: User };
 
 export interface AuthProvider {}

@@ -5,12 +5,14 @@ import {
   type HOC,
   type FirebaseContext,
   type LoadingOptionalData,
-  firebaseContext
+  type FirebaseApp,
+  firebaseContext,
+  withFirebaseApp
 } from "@parti/reactfire-provider";
 import { type UserState } from "./types";
 
 export default function withFirebaseUser<
-  ExtendedProps: { user: UserState },
+  ExtendedProps: { },
   Props: $Diff<ExtendedProps, { user: UserState | void }>
 >(): HOC<ExtendedProps, Props> {
   return function(
@@ -20,8 +22,10 @@ export default function withFirebaseUser<
       user: UserState
     };
 
-    return class ComponentWithFirebaseDocument extends React.PureComponent<
-      Props,
+    type TempProps = Props & { firebaseApp: FirebaseApp };
+
+    class ComponentWithFirebaseDocument extends React.PureComponent<
+      TempProps,
       State
     > {
       static defaultProps = {};
@@ -29,22 +33,22 @@ export default function withFirebaseUser<
 
       _subscription: null | (() => void);
 
-      constructor(props: Props, context: FirebaseContext) {
+      constructor(props: TempProps, context: FirebaseContext) {
         super(props, context);
         this.state = {
-          user: { type: "loading" }
+          user: { type: "loading", user: undefined }
         };
         this._subscription = null;
       }
 
       componentDidMount() {
-        this._subscription = this.context.app
+        this._subscription = (this.context: any).firebaseApp
           .auth()
           .onAuthStateChanged(user => {
             if (user) {
               this.setState({ user: { type: "loaded", user } });
             } else {
-              this.setState({ user: { type: "unknown" } });
+              this.setState({ user: { type: "unknown", user: undefined } });
             }
           });
       }
@@ -57,12 +61,14 @@ export default function withFirebaseUser<
       }
 
       render() {
+        let { firebaseApp, ...otherProps } = this.props;
         let props: ExtendedProps = {
-          ...this.props,
+          ...otherProps,
           user: this.state.user
         };
         return <Component {...props} />;
       }
-    };
+    }
+    return withFirebaseApp()(ComponentWithFirebaseDocument);
   };
 }

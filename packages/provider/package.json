@@ -2,11 +2,10 @@
   "name": "@parti/reactfire-provider",
   "version": "0.0.1",
   "description": "",
-  "main": "lib/index.js",
+  "main": "index.js",
   "scripts": {
-    "build": "node ../dev-scripts/build",
+    "compile": "node ../dev-scripts/compile",
     "watch": "node ../dev-scripts/watch",
-    "distribute": "node ../dev-scripts/distribute",
     "prepublish": "yarn run build",
     "test": "jest"
   },
@@ -30,7 +29,5 @@
     "@firebase/app": "^0.1.10",
     "firebase": "^4.11.0",
     "react": "^16.2.0"
-  },
-  "dependencies": {
   }
 }

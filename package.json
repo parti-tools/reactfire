@@ -5,7 +5,10 @@
   },
   "scripts": {
     "link": "flow-mono create-symlinks ./build/.flowconfig",
-    "prepare": "yarn run link"
+    "prepare": "yarn run link",
+    "compile:all": "lerna exec --ignore dev-scripts --ignore example -- yarn compile",
+    "compile:watch:all": "node ./packages/dev-scripts/watch.js",
+    "bootstrap": "lerna bootstrap"
   },
   "workspaces": ["packages/*"]
 }

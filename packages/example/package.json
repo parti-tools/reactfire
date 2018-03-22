@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@firebase/app": "^0.1.10",
+    "@firebase/auth": "^0.3.4",
     "@parti/reactfire-auth": "^0.0.1",
+    "@parti/reactfire-data": "^0.0.1",
     "@parti/reactfire-provider": "^0.0.1",
     "flow-bin": "^0.68.0",
     "react": "^16.2.0",
@@ -17,6 +20,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "flow-bin": "^0.68.0",
     "jest": "^22.4.2"
   }
 }

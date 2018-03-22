@@ -3,7 +3,6 @@ import * as React from "react";
 import firebase from "@firebase/app";
 
 const PROP_NAME = "firebaseApp";
-
 type UnaryFn<A, R> = (a: A) => R;
 export type HOC<Base, Enhanced> = UnaryFn<
   React.ComponentType<Base>,
@@ -39,7 +38,7 @@ export const firebaseContext = {
 };
 
 export type FirebaseContext = {
-  [typeof PROP_NAME]: FirebaseApp
+  firebaseApp: FirebaseApp
 };
 
 export type FirebaseOptions = {
@@ -58,17 +57,17 @@ export type FirebaseApp = {
   delete(): Promise<void>
 };
 
-type Props = FirebaseOptions & {
+type FirebaseProviderProps = FirebaseOptions & {
   name?: string,
   children: React.Node
 };
 
-export class FirebaseProvider extends React.PureComponent<Props> {
+export class FirebaseProvider extends React.PureComponent<FirebaseProviderProps> {
   static defaultProps = {};
   static childContextTypes = firebaseContext;
   app: FirebaseApp;
 
-  constructor(props: Props) {
+  constructor(props: FirebaseProviderProps) {
     super(props);
   }
 
@@ -104,10 +103,10 @@ export class FirebaseConsumer extends React.PureComponent<
   }
 }
 
-export function withFirebaseApp(): HOC<
-  $Diff<Props, { firebaseApp: FirebaseApp | void }>,
-  Props
-> {
+export function withFirebaseApp<Props: {}>(): HOC<
+  Props,
+  $Diff<Props, { firebaseApp: FirebaseApp | void }>
+  > {
   return function(Component: React.ComponentType<Props>) {
     return (props: $Diff<Props, { firebaseApp: FirebaseApp | void }>) => (
       <FirebaseConsumer>
