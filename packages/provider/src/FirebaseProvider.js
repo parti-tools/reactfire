@@ -15,10 +15,12 @@ export default class FirebaseProvider extends React.PureComponent<Props> {
   app: FirebaseApp;
 
   componentWillMount() {
+    console.log("------ --m")
     this.app = firebase.initializeApp(this.props, this.props.name);
   }
 
   componentWillUnmount() {
+    console.log("------ unmount")
     this.app.delete();
   }
 

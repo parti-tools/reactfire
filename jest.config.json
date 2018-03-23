@@ -1,9 +1,7 @@
 {
   "verbose": true,
   "projects": ["<rootDir>/packages/provider"],
-  "moduleFileExtensions": ["flow", "js"],
   "testMatch": ["**/src/__tests__/**/*.spec.js"],
-  "testEnvironment": "node",
   "setupTestFrameworkScriptFile": "<rootDir>/config/jest/setup.js",
   "transform": {
     "^.+\\.(flow|js)$":

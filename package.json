@@ -15,8 +15,10 @@
     "prepare": "yarn run link",
     "watch":
       "./packages/cra-scripts/bin/parti-cra-scripts.js watch-all --dirs packages/*",
-    "build:all":
+    "build":
       "lerna exec --ignore dev-scripts --ignore example -- yarn build",
+    "clean":
+      "lerna exec --ignore dev-scripts --ignore example -- yarn clean",
     "bootstrap": "lerna bootstrap",
     "test": "jest --config jest.config.json"
   },
