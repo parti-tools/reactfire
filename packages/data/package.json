@@ -4,21 +4,37 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "compile": "node ../dev-scripts/compile",
-    "watch": "node ../dev-scripts/watch",
-    "prepublish": "yarn run build",
-    "test": "jest"
+    "build": "../cra-scripts/bin/parti-cra-scripts.js build",
+    "test": "../cra-scripts/bin/parti-cra-scripts.js test",
+    "clean": "../cra-scripts/bin/parti-cra-scripts.js clean",
+    "watch": "../cra-scripts/bin/parti-cra-scripts.js watch",
+    "prepublish": "yarn build"
   },
   "keywords": [],
   "author": "",
   "devDependencies": {
     "@firebase/firestore": "^0.3.4",
+    "@parti/cra-scripts": "^1.0.0",
+    "babel-jest": "^22.4.3",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "flow-bin": "^0.68.0",
     "jest": "^22.4.2",
-    "prettier": "^1.11.1"
+    "prettier": "^1.11.1",
+    "react-test-renderer": "^16.2.0"
   },
   "dependencies": {
-    "@parti/reactfire-provider": "^0.0.1"
+    "@parti/reactfire-provider": "^0.0.1",
+    "@parti/reactfire-types": "^0.0.1",
+    "babel-jest": "^22.4.3",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "jest": "^22.4.3",
+    "react-test-renderer": "^16.2.0"
   },
   "peerDependencies": {
     "@firebase/firestore": "^0.3.4"

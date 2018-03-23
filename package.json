@@ -1,14 +1,24 @@
 {
   "private": true,
   "devDependencies": {
-    "flow-mono-cli": "^1.3.0"
+    "flow-mono-cli": "^1.3.0",
+    "babel-jest": "^22.4.3",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "dev-scripts": "^1.0.0",
+    "react-test-renderer": "^16.2.0",
+    "jest": "^22.4.2",
+    "dotenv": "^5.0.1"
   },
   "scripts": {
     "link": "flow-mono create-symlinks ./build/.flowconfig",
     "prepare": "yarn run link",
-    "compile:all": "lerna exec --ignore dev-scripts --ignore example -- yarn compile",
-    "compile:watch:all": "node ./packages/dev-scripts/watch.js",
-    "bootstrap": "lerna bootstrap"
+    "watch":
+      "./packages/cra-scripts/bin/parti-cra-scripts.js watch-all --dirs packages/*",
+    "build:all":
+      "lerna exec --ignore dev-scripts --ignore example -- yarn build",
+    "bootstrap": "lerna bootstrap",
+    "test": "jest --config jest.config.json"
   },
   "workspaces": ["packages/*"]
 }

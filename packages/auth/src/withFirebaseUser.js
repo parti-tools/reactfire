@@ -4,7 +4,6 @@ import "@firebase/auth";
 import {
   type HOC,
   type FirebaseContext,
-  type LoadingOptionalData,
   type FirebaseApp,
   firebaseContext,
   withFirebaseApp

@@ -1,4 +1,6 @@
 // @flow
+import {FirebaseOptions} from "../provider/types";
+
 export type UserState =
   | { type: "loading", user: void }
   | { type: "unknown", user: void }
@@ -81,4 +83,14 @@ export type UserInfo = {
   photoURL: string | null,
   providerId: string,
   uid: string
+};
+
+export type FirebaseAuth = {
+  someval:string
+}
+
+
+
+declare type npm$parti$reactfire$FirebaseApp = {
+  auth(): FirebaseAuth;
 };

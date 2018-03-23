@@ -2,12 +2,15 @@
   "name": "@parti/reactfire-provider",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "compile": "node ../dev-scripts/compile",
-    "watch": "node ../dev-scripts/watch",
-    "prepublish": "yarn run build",
-    "test": "jest"
+    "build": "../cra-scripts/bin/parti-cra-scripts.js build",
+    "test": "../cra-scripts/bin/parti-cra-scripts.js test",
+    "clean": "../cra-scripts/bin/parti-cra-scripts.js clean",
+    "watch": "../cra-scripts/bin/parti-cra-scripts.js watch",
+    "flow": "flow",
+    "flow:check": "flow check",
+    "prepublish": "yarn build"
   },
   "keywords": [
     "react",
@@ -18,16 +21,18 @@
   "license": "MIT",
   "devDependencies": {
     "@firebase/app": "^0.1.10",
+    "@parti/cra-scripts": "^1.0.0",
     "firebase": "^4.11.0",
     "flow-bin": "^0.68.0",
-    "jest": "^22.4.2",
     "prettier": "^1.11.1",
-    "react": "^16.2.0",
-    "typescript": "^2.7.2"
+    "react": "^16.2.0"
   },
   "peerDependencies": {
     "@firebase/app": "^0.1.10",
     "firebase": "^4.11.0",
     "react": "^16.2.0"
+  },
+  "dependencies": {
+    "@parti/reactfire-types": "^0.0.1"
   }
 }

@@ -3,14 +3,15 @@ const path = require("path");
 const _compile = require("./_compile");
 
 chokidar
-  .watch(path.resolve(process.cwd(), "**/*.js.flow"), {
+  .watch(path.resolve(process.cwd(), "**/src/**/*.js"), {
     followSymlinks: false,
     ignored: /\bnode_modules\b/
   })
   .on("all", function(event, filePath, details) {
-    console.log('----' , event, filePath)
-    _compile(filePath).then(() => {
-      console.log("compiled " + filePath)
+    _compile(filePath).then(compiled => {
+      if (compiled) {
+        console.log("compiled " + filePath);
+      }
     });
   });
 

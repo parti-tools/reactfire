@@ -1,0 +1,23 @@
+{
+  "name": "@parti/cra-scripts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react-app": "^3.1.1",
+    "chokidar": "^2.0.3",
+    "glob": "^7.1.2",
+    "jest": "^22.4.3",
+    "make-dir": "^1.2.0",
+    "pify": "^3.0.0",
+    "shelljs": "^0.8.1"
+  },
+  "bin": {
+    "parti-cra-scripts": "./bin/parti-cra-scripts.js"
+  },
+  "devDependencies": {
+    "flow-bin": "^0.68.0"
+  }
+}

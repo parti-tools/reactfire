@@ -1,13 +1,1 @@
-[ignore]
-<PROJECT_ROOT>/lib/.*
-
-[include]
-src
-
-[libs]
-
-[lints]
-
-[options]
-
-[strict]
+/Users/tshani/Documents/workspace/parti-tools/reactfire/build/.flowconfig

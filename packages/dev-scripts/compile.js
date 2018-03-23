@@ -3,7 +3,7 @@ const glob = require("glob");
 const _compile = require("./_compile");
 
 console.log("Compiling...");
-let files = glob.sync("{**/*.js.flow,!node_modules/**}");
+let files = glob.sync("{**/src/**/*.js,!node_modules/**}");
 let compilation = files.map(f => path.resolve(process.cwd(), f)).map(_compile);
 Promise.all(compilation)
   .then(() => {
