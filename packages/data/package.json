@@ -1,7 +1,7 @@
 {
   "name": "@parti/reactfire-data",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
     "build": "../cra-scripts/bin/parti-cra-scripts.js build",
@@ -15,26 +15,11 @@
   "devDependencies": {
     "@firebase/firestore": "^0.3.4",
     "@parti/cra-scripts": "^1.0.0",
-    "babel-jest": "^22.4.3",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
-    "flow-bin": "^0.68.0",
-    "jest": "^22.4.2",
-    "prettier": "^1.11.1",
-    "react-test-renderer": "^16.2.0"
+    "flow-bin": "^0.68.0"
   },
   "dependencies": {
     "@parti/reactfire-provider": "^0.0.1",
-    "@parti/reactfire-types": "^0.0.1",
-    "babel-jest": "^22.4.3",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
-    "jest": "^22.4.3",
-    "react-test-renderer": "^16.2.0"
+    "@parti/reactfire-types": "^0.0.1"
   },
   "peerDependencies": {
     "@firebase/firestore": "^0.3.4"

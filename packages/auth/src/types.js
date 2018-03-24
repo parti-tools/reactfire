@@ -1,6 +1,4 @@
 // @flow
-import {FirebaseOptions} from "../provider/types";
-
 export type UserState =
   | { type: "loading", user: void }
   | { type: "unknown", user: void }

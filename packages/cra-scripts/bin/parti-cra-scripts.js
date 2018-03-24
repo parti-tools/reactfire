@@ -21,6 +21,7 @@ switch (script) {
   case 'clean':
   case 'build':
   case 'start':
+  case 'format':
   case 'watch':
   case 'watch-all':
   case 'test': {

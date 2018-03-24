@@ -1,7 +1,7 @@
 // @flow
 import * as React from "react";
 
-import FirebaseDocumentContainer from "@parti/reactfire-data/FirebaseDocumentContainer";
+import { FirebaseDocumentContainer } from "@parti/reactfire-data";
 import type { HOC } from "../../provider";
 
 type Props = {};
