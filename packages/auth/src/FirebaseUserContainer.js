@@ -1,10 +1,14 @@
 // @flow
 import * as React from "react";
-import withFirebaseUser from "./withFirebaseUser";
+import {
+  type HOC,
+  type FirebaseApp,
+  FirebaseConsumer
+} from "@parti/reactfire-provider";
 import { type UserState, type User } from "./types";
 
 type Props = {
-  user: UserState,
+  app: FirebaseApp,
   children:
     | {
         default?: () => React.Node,
@@ -14,14 +18,47 @@ type Props = {
       }
     | (UserState => React.Node)
 };
+type State = {
+  user: UserState
+};
 
-class FirebaseUserContainer extends React.PureComponent<Props> {
+class FirebaseUserContainer extends React.PureComponent<Props, State> {
+
+  _subscription: null | (() => void);
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      user: { type: "loading", user: undefined }
+    };
+    this._subscription = null;
+  }
+
+  componentDidMount() {
+    this._subscription = (this.props.app: any)
+      .auth()
+      .onAuthStateChanged(user => {
+        if (user) {
+          this.setState({ user: { type: "loaded", user } });
+        } else {
+          this.setState({ user: { type: "unknown", user: undefined } });
+        }
+      });
+  }
+
+  componentWillUnmount() {
+    if (this._subscription) {
+      this._subscription();
+      this._subscription = null;
+    }
+  }
+
   render() {
     let children = this.props.children;
     if ("function" === typeof children) {
-      return children(this.props.user);
+      return children(this.state.user);
     } else {
-      switch (this.props.user.type) {
+      switch (this.state.user.type) {
         case "loading":
           return children.loading
             ? children.loading()
@@ -31,13 +68,17 @@ class FirebaseUserContainer extends React.PureComponent<Props> {
             ? children.unknown()
             : children.default ? children.default() : null;
         case "loaded":
-          return children.render(this.props.user.user);
+          return children.render(this.state.user.user);
         default:
-          (this.props.user: void);
+          (this.state.user: void);
           return null;
       }
     }
   }
 }
 
-export default withFirebaseUser()(FirebaseUserContainer);
+export default (props: $Diff<Props, { app: any | void }>) => (
+  <FirebaseConsumer>
+    {app => <FirebaseUserContainer {...props} app={app} />}
+  </FirebaseConsumer>
+);

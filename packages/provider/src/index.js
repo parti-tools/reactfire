@@ -1,12 +1,53 @@
 // @flow
 import * as React from "react";
-import { type FirebaseApp } from "./types";
 import { type HOC } from "@parti/reactfire-types";
+import firebase from "@firebase/app";
+const { Provider, Consumer } = (React: any).createContext(null);
 
-export type { HOC, FirebaseApp };
+type ConsumerProps = {
+  children: (firebase: FirebaseApp) => React.Node
+};
 
-export { firebaseContext, FIREBASE_APP_PROP_NAME } from "./firebaseContext";
-export type { FirebaseContext } from "./firebaseContext";
-export { default as FirebaseProvider } from "./FirebaseProvider";
-export { default as FirebaseConsumer } from "./FirebaseConsumer";
-export { default as withFirebaseApp } from "./withFirebaseApp";
+type Props = FirebaseOptions & {
+  name?: string,
+  children: React.Node
+};
+
+export class FirebaseProvider extends React.PureComponent<Props> {
+  app: FirebaseApp;
+
+  componentWillMount() {
+    console.log("------ --m");
+    this.app = firebase.initializeApp(this.props, this.props.name);
+  }
+
+  componentWillUnmount() {
+    console.log("------ unmount");
+    this.app.delete();
+  }
+
+  render() {
+    return <Provider value={this.app}>{this.props.children}</Provider>;
+  }
+}
+
+export const FirebaseConsumer = (props: ConsumerProps) => (
+  <Consumer>{app => props.children(app)}</Consumer>
+);
+
+export type FirebaseOptions = {
+  apiKey: string,
+  authDomain?: string,
+  databaseURL?: string,
+  projectId?: string,
+  storageBucket?: string,
+  messagingSenderId?: string
+};
+
+export type FirebaseApp = {
+  name: string,
+  +options: FirebaseOptions,
+  delete(): Promise<void>
+};
+
+export type { HOC };

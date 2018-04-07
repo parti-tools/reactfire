@@ -19,7 +19,8 @@
   "license": "MIT",
   "devDependencies": {
     "@parti/cra-scripts": "^1.0.0",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "flow-bin": "0.69.0"
   },
   "dependencies": {
   }

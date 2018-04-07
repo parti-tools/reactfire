@@ -6,7 +6,8 @@ import {
   type FirebaseContext,
   type FirebaseApp,
   firebaseContext,
-  withFirebaseApp
+  withFirebaseApp,
+  FirebaseConsumer
 } from "@parti/reactfire-provider";
 import { type UserState } from "./types";
 

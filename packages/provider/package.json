@@ -23,13 +23,13 @@
     "@firebase/app": "^0.1.10",
     "@parti/cra-scripts": "^1.0.0",
     "firebase": "^4.11.0",
-    "flow-bin": "^0.68.0",
-    "react": "^16.2.0"
+    "flow-bin": "0.69.0",
+    "react": "16.3.0"
   },
   "peerDependencies": {
     "@firebase/app": "^0.1.10",
     "firebase": "^4.11.0",
-    "react": "^16.2.0"
+    "react": "^16.3.0"
   },
   "dependencies": {
     "@parti/reactfire-types": "^0.0.1"

@@ -1,8 +1,7 @@
 // @flow
 import * as React from "react";
-import { firebaseContext } from "@parti/reactfire-provider";
-import type { FirebaseContext } from "@parti/reactfire-provider";
-import type { DocumentData, DocumentSnapshot } from "./types";
+import { FirebaseConsumer } from "@parti/reactfire-provider";
+import type { DocumentData, DocumentSnapshot, AppWithFirestore } from "./types";
 import "@firebase/firestore";
 
 type DocumentInfo<T> = {
@@ -20,6 +19,7 @@ export type DocumentStatus<T> =
 
 type Props<T> = {
   path: string,
+  app: AppWithFirestore,
   transform: (id: string, data: DocumentData) => T,
   children:
     | {
@@ -36,16 +36,14 @@ type State<T> = {
   data?: DocumentInfo<T>
 };
 
-export default class FirebaseDocumentContainer<
-  T: {}
-> extends React.PureComponent<Props<T>, State<T>> {
-  static defaultProps = {};
-  static contextTypes = firebaseContext;
-
+class FirebaseDocumentContainer<T: {}> extends React.PureComponent<
+  Props<T>,
+  State<T>
+> {
   _subscription: null | (() => void);
 
-  constructor(props: Props<T>, context: FirebaseContext) {
-    super(props, context);
+  constructor(props: Props<T>) {
+    super(props);
     this.state = {
       status: "loading"
     };
@@ -70,7 +68,7 @@ export default class FirebaseDocumentContainer<
     this._unsubscribe();
     if (!refPath) return;
     this._subscription = () => {}; // just to make sure we have some subscription
-    this._subscription = this.context.firebaseApp
+    this._subscription = this.props.app
       .firestore()
       .doc(refPath)
       .onSnapshot(this._observer);
@@ -146,3 +144,14 @@ export default class FirebaseDocumentContainer<
     }
   }
 }
+
+export default <T: {}>(props: $Diff<Props<T>, { app: any | void }>) => (
+  <FirebaseConsumer>
+    {app => (
+      <FirebaseDocumentContainer
+        {...props}
+        app={((app: any): AppWithFirestore)}
+      />
+    )}
+  </FirebaseConsumer>
+);

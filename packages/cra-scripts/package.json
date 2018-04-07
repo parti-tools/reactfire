@@ -20,6 +20,6 @@
     "parti-cra-scripts": "./bin/parti-cra-scripts.js"
   },
   "devDependencies": {
-    "flow-bin": "^0.68.0"
+    "flow-bin": "0.69.0"
   }
 }

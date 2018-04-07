@@ -1,6 +1,5 @@
 // @flow
-import FirebaseProvider from "../FirebaseProvider";
-import FirebaseConsumer from "../FirebaseConsumer";
+import { FirebaseProvider, FirebaseConsumer } from "../index";
 import firebase from "firebase";
 import * as React from "react";
 import { shallow, mount, render } from "enzyme";

@@ -1,7 +1,6 @@
 // @flow
 import * as React from "react";
-import { firebaseContext } from "@parti/reactfire-provider";
-import type { FirebaseContext } from "@parti/reactfire-provider";
+import { FirebaseConsumer } from "@parti/reactfire-provider";
 import type {
   CollectionReference,
   DocumentData,
@@ -10,6 +9,7 @@ import type {
   AppWithFirestore
 } from "./types";
 import "@firebase/firestore";
+import { type FirestoreError, type FirestoreErrorCode } from "./types";
 
 type QueryFn = (col: CollectionReference) => Query;
 
@@ -18,42 +18,47 @@ type Props<T> = {
   transform: (id: string, data: DocumentData, index: number) => T,
   query?: QueryFn,
   compareField?: string,
+  app: AppWithFirestore,
   children:
     | {
         default?: () => React.Node,
         loading?: () => React.Node,
         reloading?: () => React.Node,
         unknown?: () => React.Node,
-        render: Array<T> => React.Node
+        error?: FirestoreErrorCode => React.Node,
+        render: (Array<T>) => React.Node
       }
     | ((
         | { type: "loaded", data: Array<T> }
+        | { type: "error", error: FirestoreErrorCode }
         | { type: "loading" }
         | { type: "reloading" }
       ) => React.Node)
 };
 
 type State<T> = {
-  status: "loading" | "loaded" | "reloading",
+  status: "loading" | "loaded" | "reloading" | "error",
   query?: Query,
+  error?: FirestoreErrorCode,
   data?: Array<T>
 };
 
-export default class FirebaseQueryContainer<T: {}> extends React.PureComponent<
+class FirebaseQueryContainer<T: {}> extends React.PureComponent<
   Props<T>,
   State<T>
 > {
   static defaultProps = {};
-  static contextTypes = firebaseContext;
 
   _subscription: null | (() => void);
 
-  constructor(props: Props<T>, context: FirebaseContext) {
-    super(props, context);
+  constructor(props: Props<T>) {
+    super(props);
     let collectionReference = this._col(props.path);
     this.state = {
       status: "loading",
-      query: props.query ? props.query(collectionReference) : collectionReference
+      query: props.query
+        ? props.query(collectionReference)
+        : collectionReference
     };
     this._subscription = null;
   }
@@ -81,16 +86,14 @@ export default class FirebaseQueryContainer<T: {}> extends React.PureComponent<
     this._unsubscribe();
     if (!query) return;
     this._subscription = () => {}; // just to make sure we have some subscription
-    this._subscription = query.onSnapshot(this._observer);
+    this._subscription = query.onSnapshot(this._observer, this._onError);
     this.setState(({ status }) => ({
       status: status === "loading" ? "reloading" : "loading"
     }));
   }
 
   _col(refPath: string): CollectionReference {
-    return (this.context.firebaseApp: AppWithFirestore)
-      .firestore()
-      .collection(refPath);
+    return this.props.app.firestore().collection(refPath);
   }
 
   _unsubscribe() {
@@ -99,6 +102,10 @@ export default class FirebaseQueryContainer<T: {}> extends React.PureComponent<
       this._subscription = null;
     }
   }
+
+  _onError = (err: FirestoreError) => {
+    this.setState({ status: "error", error: err.code });
+  };
 
   _observer = (snap: QuerySnapshot) => {
     if (!this._subscription) return;
@@ -124,6 +131,11 @@ export default class FirebaseQueryContainer<T: {}> extends React.PureComponent<
           return children({ type: "reloading" });
         case "loaded":
           return children({ type: "loaded", data: data || [] });
+        case "error":
+          return children({
+            type: "error",
+            error: this.state.error || "unknown"
+          });
         default:
           (status: void);
           return children({ type: "loaded", data: data || [] });
@@ -145,6 +157,10 @@ export default class FirebaseQueryContainer<T: {}> extends React.PureComponent<
               : children.default ? children.default() : null;
           }
           return children.render(data);
+        case "error":
+          return children.error
+            ? children.error(this.state.error || "unknown")
+            : children.default ? children.default() : null;
         default:
           (status: void);
           return null;
@@ -152,3 +168,11 @@ export default class FirebaseQueryContainer<T: {}> extends React.PureComponent<
     }
   }
 }
+
+export default <T: {}>(props: $Diff<Props<T>, { app: any | void }>) => (
+  <FirebaseConsumer>
+    {app => (
+      <FirebaseQueryContainer {...props} app={((app: any): AppWithFirestore)} />
+    )}
+  </FirebaseConsumer>
+);
