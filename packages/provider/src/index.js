@@ -13,7 +13,7 @@ type Props = FirebaseOptions & {
   children: React.Node
 };
 
-export class FirebaseProvider extends React.PureComponent<Props> {
+export class FirebaseProvider extends React.Component<Props> {
   app: FirebaseApp;
 
   componentWillMount() {

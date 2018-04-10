@@ -36,7 +36,7 @@ type State<T> = {
   data?: DocumentInfo<T>
 };
 
-class FirebaseDocumentContainer<T: {}> extends React.PureComponent<
+class FirebaseDocumentContainer<T: {}> extends React.Component<
   Props<T>,
   State<T>
 > {

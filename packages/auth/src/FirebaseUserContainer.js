@@ -8,7 +8,7 @@ import {
 import { type UserState, type User } from "./types";
 
 type Props = {
-  app: FirebaseApp,
+  app: FirebaseApp | null,
   children:
     | {
         default?: () => React.Node,
@@ -19,37 +19,44 @@ type Props = {
     | (UserState => React.Node)
 };
 type State = {
-  user: UserState
+  user: UserState,
+  subscription: null | (() => void)
 };
 
-class FirebaseUserContainer extends React.PureComponent<Props, State> {
-
-  _subscription: null | (() => void);
-
+class FirebaseUserContainer extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      user: { type: "loading", user: undefined }
+      user: { type: "loading", user: undefined },
+      subscription: null
     };
-    this._subscription = null;
   }
 
   componentDidMount() {
-    this._subscription = (this.props.app: any)
-      .auth()
-      .onAuthStateChanged(user => {
-        if (user) {
-          this.setState({ user: { type: "loaded", user } });
-        } else {
-          this.setState({ user: { type: "unknown", user: undefined } });
-        }
-      });
+    this._listenToUserChange();
   }
 
   componentWillUnmount() {
-    if (this._subscription) {
-      this._subscription();
-      this._subscription = null;
+    if (this.state.subscription) {
+      this.state.subscription();
+    }
+  }
+
+  _listenToUserChange() {
+    if (this.state.subscription) {
+      this.state.subscription();
+    }
+    if (this.props.app) {
+      let subscription = (this.props.app: any)
+        .auth()
+        .onAuthStateChanged(user => {
+          if (user) {
+            this.setState({ user: { type: "loaded", user } });
+          } else {
+            this.setState({ user: { type: "unknown", user: undefined } });
+          }
+        });
+      this.setState({ subscription });
     }
   }
 

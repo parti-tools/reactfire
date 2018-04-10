@@ -43,7 +43,7 @@ type State<T> = {
   data?: Array<T>
 };
 
-class FirebaseQueryContainer<T: {}> extends React.PureComponent<
+class FirebaseQueryContainer<T: {}> extends React.Component<
   Props<T>,
   State<T>
 > {
