@@ -17,12 +17,10 @@ export class FirebaseProvider extends React.Component<Props> {
   app: FirebaseApp;
 
   componentWillMount() {
-    console.log("------ --m");
     this.app = firebase.initializeApp(this.props, this.props.name);
   }
 
   componentWillUnmount() {
-    console.log("------ unmount");
     this.app.delete();
   }
 

@@ -19,35 +19,43 @@ type Props = {
     | (UserState => React.Node)
 };
 type State = {
-  user: UserState,
-  subscription: null | (() => void)
+  user: UserState
 };
 
 class FirebaseUserContainer extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      user: { type: "loading", user: undefined },
-      subscription: null
-    };
+  _subscription: null | (() => void);
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (!prevState || !prevState.user) {
+      return {
+        user: { type: "loading", user: undefined }
+      };
+    }
+    return null;
   }
 
   componentDidMount() {
     this._listenToUserChange();
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.app !== prevProps.app) {
+      this._listenToUserChange();
+    }
+  }
+
   componentWillUnmount() {
-    if (this.state.subscription) {
-      this.state.subscription();
+    if (this._subscription) {
+      this._subscription();
     }
   }
 
   _listenToUserChange() {
-    if (this.state.subscription) {
-      this.state.subscription();
+    if (this._subscription) {
+      this._subscription();
     }
     if (this.props.app) {
-      let subscription = (this.props.app: any)
+      this._subscription = (this.props.app: any)
         .auth()
         .onAuthStateChanged(user => {
           if (user) {
@@ -56,7 +64,6 @@ class FirebaseUserContainer extends React.Component<Props, State> {
             this.setState({ user: { type: "unknown", user: undefined } });
           }
         });
-      this.setState({ subscription });
     }
   }
 
