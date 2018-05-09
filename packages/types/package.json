@@ -1,6 +1,6 @@
 {
   "name": "@parti/reactfire-types",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.1-alpha.1",
   "description": "Provides flow type information for the rest of the reactfire packages",
   "main": "lib/types.js",
   "scripts": {
@@ -18,7 +18,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@parti/cra-scripts": "^0.0.1-alpha.0",
+    "@parti/cra-scripts": "^0.0.1-alpha.1",
     "flow-bin": "0.69.0",
     "react": "^16.3.0"
   }
