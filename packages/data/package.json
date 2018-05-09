@@ -1,7 +1,10 @@
 {
   "name": "@parti/reactfire-data",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.2",
   "main": "lib/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "scripts": {
     "build": "../cra-scripts/bin/parti-cra-scripts.js build",
@@ -18,8 +21,8 @@
     "flow-bin": "0.69.0"
   },
   "dependencies": {
-    "@parti/reactfire-provider": "^0.0.1-alpha.1",
-    "@parti/reactfire-types": "^0.0.1-alpha.1"
+    "@parti/reactfire-provider": "^0.0.1-alpha.2",
+    "@parti/reactfire-types": "^0.0.1-alpha.2"
   },
   "peerDependencies": {
     "@firebase/firestore": "^0.3.4",

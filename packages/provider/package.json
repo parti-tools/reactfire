@@ -1,8 +1,11 @@
 {
   "name": "@parti/reactfire-provider",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.2",
   "description": "",
   "main": "lib/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "../cra-scripts/bin/parti-cra-scripts.js build",
     "test": "../cra-scripts/bin/parti-cra-scripts.js test",
@@ -32,6 +35,6 @@
     "react": "^16.3.0"
   },
   "dependencies": {
-    "@parti/reactfire-types": "^0.0.1-alpha.1"
+    "@parti/reactfire-types": "^0.0.1-alpha.2"
   }
 }
