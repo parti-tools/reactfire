@@ -1,7 +1,13 @@
 // @flow
 import * as React from "react";
 import { FirebaseConsumer } from "@parti/reactfire-provider";
-import type { DocumentData, DocumentSnapshot, AppWithFirestore } from "./types";
+import type {
+  DocumentData,
+  DocumentSnapshot,
+  AppWithFirestore,
+  FirestoreError,
+  FirestoreErrorCode
+} from "./types";
 import "@firebase/firestore";
 
 type DocumentInfo<T> = {
@@ -13,6 +19,7 @@ type DocumentInfo<T> = {
 export type DocumentStatus<T> =
   | { type: "loading" }
   | { type: "notFound" }
+  | { type: "error", error: FirestoreErrorCode }
   | (DocumentInfo<T> & {
       type: "loaded"
     });
@@ -22,17 +29,12 @@ type Props<T> = {
   app: AppWithFirestore,
   transform: (id: string, data: DocumentData) => T,
   children:
-    | {
-        default?: () => React.Node,
-        loading?: () => React.Node,
-        unknown?: () => React.Node,
-        render: T => React.Node
-      }
     | ((DocumentStatus<T>) => React.Node)
 };
 
 type State<T> = {
-  status: "loading" | "notFound" | "loaded",
+  status: "loading" | "notFound" | "loaded" | "error",
+  error?: FirestoreErrorCode,
   data?: DocumentInfo<T>
 };
 
@@ -71,7 +73,7 @@ class FirebaseDocumentContainer<T: {}> extends React.Component<
     this._subscription = this.props.app
       .firestore()
       .doc(refPath)
-      .onSnapshot(this._observer);
+      .onSnapshot(this._observer, this._error);
   }
 
   _unsubscribe() {
@@ -80,6 +82,10 @@ class FirebaseDocumentContainer<T: {}> extends React.Component<
       this._subscription = null;
     }
   }
+
+  _error = (error: FirestoreError) => {
+    this.setState({ status: "error", error: error.code });
+  };
 
   _observer = (snap: DocumentSnapshot) => {
     if (!this._subscription) return;
@@ -102,45 +108,28 @@ class FirebaseDocumentContainer<T: {}> extends React.Component<
   render() {
     let status = this.state.status;
     let data = this.state.data;
+    let error = this.state.error;
 
     let children = this.props.children;
-    if ("function" === typeof children) {
-      switch (status) {
-        case "loading":
-          return children({ type: "loading" });
-        case "notFound":
+    switch (status) {
+      case "loading":
+        return children({ type: "loading" });
+      case "notFound":
+        return children({ type: "notFound" });
+      case "loaded":
+        if (data) {
+          return children({ type: "loaded", ...data });
+        } else {
           return children({ type: "notFound" });
-        case "loaded":
-          if (data) {
-            return children({ type: "loaded", ...data });
-          } else {
-            return children({ type: "notFound" });
-          }
-        default:
-          (status: void);
+        }
+      case "error":
+        if (!error) {
           return children({ type: "notFound" });
-      }
-    } else {
-      switch (status) {
-        case "loading":
-          return children.loading
-            ? children.loading()
-            : children.default ? children.default() : null;
-        case "notFound":
-          return children.unknown
-            ? children.unknown()
-            : children.default ? children.default() : null;
-        case "loaded":
-          if (!data) {
-            return children.unknown
-              ? children.unknown()
-              : children.default ? children.default() : null;
-          }
-          return children.render(data.data);
-        default:
-          (status: void);
-          return null;
-      }
+        }
+        return children({ type: "error", error });
+      default:
+        (status: void);
+        return children({ type: "notFound" });
     }
   }
 }

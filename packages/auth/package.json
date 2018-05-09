@@ -1,6 +1,6 @@
 {
   "name": "@parti/reactfire-auth",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -15,12 +15,12 @@
   "license": "MIT",
   "devDependencies": {
     "@firebase/auth": "^0.3.4",
-    "@parti/cra-scripts": "^1.0.0",
+    "@parti/cra-scripts": "^0.0.1-alpha.0",
     "flow-bin": "0.69.0"
   },
   "dependencies": {
-    "@parti/reactfire-provider": "^0.0.1",
-    "@parti/reactfire-types": "^0.0.1"
+    "@parti/reactfire-provider": "^0.0.1-alpha.0",
+    "@parti/reactfire-types": "^0.0.1-alpha.0"
   },
   "peerDependencies": {
     "@firebase/auth": "^0.3.4",

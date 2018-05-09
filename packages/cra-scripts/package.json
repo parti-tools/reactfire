@@ -1,6 +1,7 @@
 {
   "name": "@parti/cra-scripts",
-  "version": "1.0.0",
+  "private": true,
+  "version": "0.0.1-alpha.0",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
