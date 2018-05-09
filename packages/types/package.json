@@ -1,0 +1,25 @@
+{
+  "name": "@parti/reactfire-types",
+  "version": "0.0.1-alpha.0",
+  "description": "Provides flow type information for the rest of the reactfire packages",
+  "main": "lib/types.js",
+  "scripts": {
+    "build": "../cra-scripts/bin/parti-cra-scripts.js build",
+    "test": "../cra-scripts/bin/parti-cra-scripts.js test",
+    "clean": "../cra-scripts/bin/parti-cra-scripts.js clean",
+    "watch": "../cra-scripts/bin/parti-cra-scripts.js watch",
+    "prepublish": "yarn build"
+  },
+  "keywords": [
+    "react",
+    "firebase",
+    "hoc"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@parti/cra-scripts": "^0.0.1-alpha.0",
+    "flow-bin": "0.69.0",
+    "react": "^16.3.0"
+  }
+}

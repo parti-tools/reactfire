@@ -1,0 +1,12 @@
+{
+  "verbose": true,
+  "projects": ["<rootDir>/packages/provider"],
+  "testMatch": ["**/src/__tests__/**/*.spec.js"],
+  "setupTestFrameworkScriptFile": "<rootDir>/config/jest/setup.js",
+  "transform": {
+    "^.+\\.(flow|js)$":
+      "<rootDir>/config/jest/babelTransform.js",
+    "^(?!.*\\.(flow|js|jsx|mjs|css|json|graphql)$)'":
+      "<rootDir>/config/jest/fileTransform.js"
+  }
+}

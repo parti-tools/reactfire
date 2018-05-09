@@ -1,0 +1,41 @@
+{
+  "name": "dev-scripts",
+  "version": "0.0.1-alpha.0",
+  "private": true,
+  "description": "",
+  "main": "",
+  "scripts": {
+    "build": "echo \"No build step\"",
+    "test": "../cra-scripts/bin/parti-cra-scripts.js test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@types/babel-core": "^6.25.3",
+    "@types/chokidar": "^1.7.5",
+    "babel-cli": "^6.5.1",
+    "babel-jest": "^22.4.3",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-react-app": "^3.1.1",
+    "babel-register": "^6.5.1",
+    "chokidar": "^2.0.2",
+    "cross-env": "^5.1.4",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^4.18.2",
+    "eslint-plugin-flow-vars": "^0.5.0",
+    "flow-copy-source": "^1.3.0",
+    "glob": "^7.1.2",
+    "jest": "^22.4.3",
+    "make-dir": "^1.2.0",
+    "pify": "^3.0.0",
+    "react-test-renderer": "^16.2.0"
+  },
+  "devDependencies": {
+    "flow-bin": "0.69.0",
+    "jest": "^22.4.2"
+  }
+}
